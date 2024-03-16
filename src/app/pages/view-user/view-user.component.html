@@ -1,1 +1,18 @@
-<p>view-user works!</p>
+<div class="row justify-content-center"> 
+    <div class="col text-center"> 
+        <img [src]="usuario?.image"
+            [alt]="usuario?.first_name" class="p-2 rounded-circle mx-auto"/>
+    </div>
+    <div class="col align-self-center linea">
+        <h2>{{usuario?.first_name}}</h2>
+        <h2>{{usuario?.last_name}}</h2>
+        <div class="pt-2">
+            <span class="fw-semibold">Nombre de Usuario: </span>
+            <span class="fw-light">{{usuario?.username}}</span>
+        </div>
+        <div class="pt-2">
+            <span class="fw-semibold">Email: </span>
+            <span class="fw-light">{{usuario?.email}}</span>
+            <app-buttonbox [parent]="'view'" [idUsuario]="usuario?._id"></app-buttonbox>
+    </div>
+</div>

@@ -17,6 +17,10 @@ export class UsersService {
     return lastValueFrom(this.httpClient.get<IData>(this.baseUrl))
   }
 
+  getById(_id: string): Promise<IUser>{
+    return lastValueFrom(this.httpClient.get<IUser>(`${this.baseUrl}/${_id}`))
+  }
+
   delete(_id: string) : Promise<IUser>{
     return lastValueFrom(this.httpClient.delete<IUser>(`${this.baseUrl}/${_id}`))
   }
