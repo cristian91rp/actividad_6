@@ -1,1 +1,62 @@
-<p>form-user works!</p>
+<section class="container m-5">
+    <form [formGroup]="formUser" (ngSubmit)="getDataForm()">
+        <h3 class="pb-3">NUEVO USUARIO</h3>
+        <div class="m-1 mb-4">
+            <label for="first_name" class="form-label m-0 ps-2 fw-semibold">Nombre Usuario</label>
+            <input type="text" class="form-control" placeholder="Introduce nombre de usuario" id= "first_name" formControlName="first_name">
+            @if(checkControl('first_name', 'required')){
+                <p class="error">Campo requerido</p>
+            }
+            @if(checkControl('first_name', 'minlength')){  
+                <p class="error">El campo tiene que tener minimo 2 caracteres</p>
+            }
+        </div>
+
+        <div class="m-1 mb-4">
+            <label for="last_name" class="form-label m-0 ps-2 fw-semibold">Apellido Usuario</label>
+            <input type="text" class="form-control" placeholder="Introduce apellido de usuario" id = "last_name" formControlName="last_name">
+            @if(checkControl('last_name', 'required')){
+                <p class="error">Campo requerido</p>
+            }
+            @if(checkControl('last_name', 'minlength')){  
+                <p class="error">El campo tiene que tener minimo 2 caracteres</p>
+            }
+        </div>
+
+        <div class="m-1 mb-4">
+            <label for="username" class="form-label m-0 ps-2 fw-semibold">Usuario</label>
+            <input type="text" class="form-control" placeholder="Introduce usuario" id = "username" formControlName="username">
+            @if(checkControl('username', 'required')){
+                <p class="error">Campo requerido</p>
+            }
+            @if(checkControl('username', 'minlength')){  
+                <p class="error">El campo tiene que tener minimo 5 caracteres</p>
+            }
+        </div>
+
+        <div class="m-1 mb-4">
+            <label for="email" class="form-label m-0 ps-2 fw-semibold">Email Usuario</label>
+            <input type="email" class="form-control" placeholder="Introduce email de usuario" id="email" formControlName="email">
+            @if(checkControl('email', 'required')){
+                <p class="error">Campo requerido</p>
+            }
+            @if(checkControl('email', 'pattern')){
+                <p class="error">Introduce un Email válido</p>
+            }
+        </div>
+
+        <div class="m-1 mb-4">
+            <label for="image" class="form-label m-0 ps-2 fw-semibold">Imagen Usuario</label>
+            <input type="text" class="form-control" placeholder="Introduce url de foto usuario" id="image" formControlName="image">
+            @if(checkControl('image', 'required')){
+                <p class="error">Campo requerido</p>
+            }
+            @if(checkControl('image', 'pattern')){
+                <p class="error">Introduce una Url válida</p>
+            }
+        </div>
+
+        <input type="submit" value="Guardar" class="btn btn-outline-secondary mt-3 fw-semibold" [disabled]="!formUser.valid">
+
+    </form>
+</section>
