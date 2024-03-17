@@ -12,16 +12,17 @@ import { UsersService } from '../../services/users.service';
   styleUrl: './view-user.component.css'
 })
 export class ViewUserComponent {
-  activedRoute = inject(ActivatedRoute)
+  activatedRoute = inject(ActivatedRoute)
   userServices = inject(UsersService)
   usuario!: IUser | undefined 
 
   ngOnInit(): void{
-    this.activedRoute.params.subscribe(async(params: any) =>{
+    this.activatedRoute.params.subscribe(async(params: any) =>{
       const id = params._id
       try{
         let response = await this.userServices.getById(id)
         this.usuario = response
+        console.log(this.usuario)
       }catch (error){
         console.log(error);
       }
