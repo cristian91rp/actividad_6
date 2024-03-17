@@ -3,5 +3,6 @@ img{
 }
 
 .card{
-    min-width: 320px
+    min-width: 320px;
+    min-height: 448px;
 }

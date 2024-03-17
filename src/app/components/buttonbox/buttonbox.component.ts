@@ -1,6 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UsersService } from '../../services/users.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-buttonbox',
@@ -16,17 +17,35 @@ export class ButtonboxComponent {
   userServices = inject(UsersService)
 
 
-  async borrarUsuario(_id: string){
-    console.log(this.idUsuario)
-    let confirmar = confirm('¿Seguro que quieres borrar el usuario con id' + this.idUsuario +"?")
-    console.log(confirmar)
-    console.log(this.idUsuario)
-    if(confirmar){
-      let response = await this.userServices.delete(_id)
-      console.log(response)
-      if(response._id){
-        alert('Se ha borrado correctamente el usuario ' + response.first_name + ' ' + response.last_name)
+
+  async borrarUsuario(_id: string) {
+    const confirmar = await Swal.fire({
+      title: '¿Seguro que quieres borrar el usuario con id ' + this.idUsuario + "?",
+      text: "¡No podrás revertirlo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Borrar",
+      cancelButtonText: "Cancelar"
+    });
+
+    if (confirmar.isConfirmed) {
+      try {
+        const response = await this.userServices.delete(_id);
+        console.log(response);
+        if (response._id) {
+          Swal.fire({
+            title: "Borrado",
+            text: "El usuario ha sido borrado correctamente",
+            icon: "success"
+          });
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
   }
+
 }
+

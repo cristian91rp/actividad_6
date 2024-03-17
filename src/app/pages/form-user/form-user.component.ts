@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-form-user',
   standalone: true,
@@ -16,6 +16,9 @@ export class FormUserComponent {
   activatedRoute = inject(ActivatedRoute)
   userService = inject(UsersService)
   router = inject(Router)
+
+  parent: string = ''
+
 
   constructor(){
     this.formUser = new FormGroup({
@@ -45,6 +48,7 @@ export class FormUserComponent {
   ngOnInit() {
     this.activatedRoute.params.subscribe(async(params: any) => {
       if(params._id){
+        this.parent= params
         const response = await this.userService.getById(params._id)
 
         this.formUser = new FormGroup({
@@ -72,6 +76,7 @@ export class FormUserComponent {
           ]),
         }, [])
       }
+      
     })
   }
 
@@ -79,17 +84,31 @@ export class FormUserComponent {
   async getDataForm() {
     if(this.formUser.value._id){
       const response = await this.userService.update(this.formUser.value)
+      console.log(response)
       if(response._id){
-        alert(`El usuario ${response.first_name + " " + response.last_name} se ha actualizado correctemente`)
-        this.router.navigate(['/'])
+        Swal.fire({
+          icon: "success",
+          title: `${response.first_name + " " + response.last_name} se ha actualizado correctemente`,
+          showConfirmButton: false,
+          timer: 2500
+        });
+        this.router.navigate(['/'])    
+
       }else {
-        alert('"El usuario que intentas editar no existe"')
+        Swal.fire('"El usuario que intentas editar no existe"')
       }
+      
     }else{
     const response = await this.userService.insert(this.formUser.value)
+    console.log(response)
     if(response.id){
-      alert(`El usuario ${response.first_name + " " + response.last_name} se ha añadido correctemente`)
-      this.router.navigate(['/'])
+      Swal.fire({
+        icon: "success",
+        title: `${response.first_name + " " + response.last_name} se ha añadido correctemente`,
+        showConfirmButton: false,
+        timer: 2500
+      });
+      this.router.navigate(['/'])      
     }
     this.formUser.reset()
     }

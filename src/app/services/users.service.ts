@@ -4,13 +4,12 @@ import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IData } from '../interfaces/idata.interface';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   private httpClient = inject(HttpClient)
-  private arrUsuarios: IUser[] = []
-
   private baseUrl = 'https://peticiones.online/api/users' 
 
   
@@ -36,14 +35,7 @@ export class UsersService {
 
  getByName(first_name: string): Promise<IUser>{
     return lastValueFrom(this.httpClient.get<IUser>(`${this.baseUrl}/${first_name}`))
-
-    /* return this.arrUsuarios.filter(user => {
-      let userName = this.quitarTildes(user.first_name) + this.quitarTildes(user.last_name)
-      let parameterName = this.quitarTildes(name)
-      return userName.includes(parameterName)
-    }) */
   }
-
 
   quitarTildes(palabra: string){
     let sinTildes = ""
@@ -55,4 +47,6 @@ export class UsersService {
     sinTildes = sinTildes.replaceAll ('ú', 'u')
     return sinTildes;
   }
+
+  
 }

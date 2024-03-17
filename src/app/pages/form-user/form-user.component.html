@@ -1,6 +1,8 @@
 <section class="container m-5">
     <form [formGroup]="formUser" (ngSubmit)="getDataForm()">
+        @if (parent === '') {
         <h3 class="pb-3">NUEVO USUARIO</h3>
+        }@else if(parent!=''){<h3 class="pb-3">ACTUALIZAR USUARIO</h3>}
         <div class="m-1 mb-4">
             <label for="first_name" class="form-label m-0 ps-2 fw-semibold">Nombre Usuario</label>
             <input type="text" class="form-control" placeholder="Introduce nombre de usuario" id= "first_name" formControlName="first_name">

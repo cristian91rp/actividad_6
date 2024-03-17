@@ -14,37 +14,39 @@ import { IData } from '../../interfaces/idata.interface';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  usuarios: IUser[]= []
+  usuarios: IUser[] = []
   userServices = inject(UsersService)
   activatedRoute = inject(ActivatedRoute)
-  hola: IData[] | any = [] 
+  hola: IData[] | any = []
 
 
   async ngOnInit(): Promise<void> {
-    
-    try{
+
+    try {
       let data = await this.userServices.getAllPromises()
       this.usuarios = data.results
       this.hola = data.page
       console.log(this.hola)
       console.log(this.usuarios)
 
-      this.activatedRoute.queryParams.subscribe((params: any) =>{
+
+      this.activatedRoute.queryParams.subscribe((params: any) => {
         const buscar = params.query
         console.log(buscar)
-      if (buscar){
-        let name = this.userServices.quitarTildes(buscar)
-        let filterUsuarios = this.usuarios.filter(user => 
-          this.userServices.quitarTildes(user.first_name).includes(name) || 
-          this.userServices.quitarTildes(user.last_name).includes(name)
-        )
-        this.usuarios = filterUsuarios
-    }if(buscar === undefined || ""){
-        this.usuarios= data.results
-      }
+        if (buscar) {
+          let name = this.userServices.quitarTildes(buscar)
+          let filterUsuarios = this.usuarios.filter(user =>
+            this.userServices.quitarTildes(user.first_name).includes(name) ||
+            this.userServices.quitarTildes(user.last_name).includes(name)
+          )
+          this.usuarios = filterUsuarios
+        } if (buscar === undefined || buscar === '') {
+          console.log(buscar)
+          this.usuarios = data.results
+        }
 
-    })
-    
+      })
+
     } catch (err) {
       console.log(err)
     }
