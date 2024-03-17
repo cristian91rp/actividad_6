@@ -2,6 +2,6 @@ img{
     width: 200px;
 }
 
-button{
-    border: none;
+.card{
+    min-width: 320px
 }
