@@ -13,10 +13,7 @@ import Swal from 'sweetalert2';
 export class ButtonboxComponent {
   @Input() idUsuario: any | string
   @Input() parent: string = "";
-
   userServices = inject(UsersService)
-
-
 
   async borrarUsuario(_id: string) {
     const confirmar = await Swal.fire({

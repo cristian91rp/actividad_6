@@ -14,19 +14,19 @@ import { UsersService } from '../../services/users.service';
 export class ViewUserComponent {
   activatedRoute = inject(ActivatedRoute)
   userServices = inject(UsersService)
-  usuario!: IUser | undefined 
+  usuario!: IUser | undefined
 
-  ngOnInit(): void{
-    this.activatedRoute.params.subscribe(async(params: any) =>{
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(async (params: any) => {
       const id = params._id
-      try{
+      try {
         let response = await this.userServices.getById(id)
         this.usuario = response
         console.log(this.usuario)
-      }catch (error){
+      } catch (error) {
         console.log(error);
       }
     })
   }
-  
+
 }

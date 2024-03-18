@@ -20,7 +20,7 @@ export class FormUserComponent {
   parent: string = ''
 
 
-  constructor(){
+  constructor() {
     this.formUser = new FormGroup({
       first_name: new FormControl(null, [
         Validators.required,
@@ -46,9 +46,9 @@ export class FormUserComponent {
   };
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(async(params: any) => {
-      if(params._id){
-        this.parent= params
+    this.activatedRoute.params.subscribe(async (params: any) => {
+      if (params._id) {
+        this.parent = params
         const response = await this.userService.getById(params._id)
 
         this.formUser = new FormGroup({
@@ -76,45 +76,45 @@ export class FormUserComponent {
           ]),
         }, [])
       }
-      
+
     })
   }
 
 
   async getDataForm() {
-    if(this.formUser.value._id){
+    if (this.formUser.value._id) {
       const response = await this.userService.update(this.formUser.value)
       console.log(response)
-      if(response._id){
+      if (response._id) {
         Swal.fire({
           icon: "success",
           title: `${response.first_name + " " + response.last_name} se ha actualizado correctemente`,
           showConfirmButton: false,
           timer: 2500
         });
-        this.router.navigate(['/'])    
+        this.router.navigate(['/'])
 
-      }else {
+      } else {
         Swal.fire('"El usuario que intentas editar no existe"')
       }
-      
-    }else{
-    const response = await this.userService.insert(this.formUser.value)
-    console.log(response)
-    if(response.id){
-      Swal.fire({
-        icon: "success",
-        title: `${response.first_name + " " + response.last_name} se ha añadido correctemente`,
-        showConfirmButton: false,
-        timer: 2500
-      });
-      this.router.navigate(['/'])      
-    }
-    this.formUser.reset()
+
+    } else {
+      const response = await this.userService.insert(this.formUser.value)
+      console.log(response)
+      if (response.id) {
+        Swal.fire({
+          icon: "success",
+          title: `${response.first_name + " " + response.last_name} se ha añadido correctemente`,
+          showConfirmButton: false,
+          timer: 2500
+        });
+        this.router.navigate(['/'])
+      }
+      this.formUser.reset()
     }
   }
 
-  checkControl(formControlName: string, validador: string): boolean | undefined{
+  checkControl(formControlName: string, validador: string): boolean | undefined {
     return this.formUser.get(formControlName)?.hasError(validador) && this.formUser.get(formControlName)?.touched
   }
 

@@ -10,43 +10,43 @@ import { IData } from '../interfaces/idata.interface';
 })
 export class UsersService {
   private httpClient = inject(HttpClient)
-  private baseUrl = 'https://peticiones.online/api/users' 
+  private baseUrl = 'https://peticiones.online/api/users'
 
-  
+
   getAllPromises(): Promise<IData> {
     return lastValueFrom(this.httpClient.get<IData>(this.baseUrl))
   }
 
-  getById(_id: string): Promise<IUser>{
+  getById(_id: string): Promise<IUser> {
     return lastValueFrom(this.httpClient.get<IUser>(`${this.baseUrl}/${_id}`))
   }
 
-  delete(_id: string) : Promise<IUser>{
+  delete(_id: string): Promise<IUser> {
     return lastValueFrom(this.httpClient.delete<IUser>(`${this.baseUrl}/${_id}`))
   }
 
-  update(formUser: IUser): Promise<IUser>{
+  update(formUser: IUser): Promise<IUser> {
     return lastValueFrom(this.httpClient.put<IUser>(`${this.baseUrl}/${formUser._id}`, formUser))
   }
 
-  insert(formUser: IUser): Promise<IUser>{
+  insert(formUser: IUser): Promise<IUser> {
     return lastValueFrom(this.httpClient.post<IUser>(this.baseUrl, formUser))
   }
 
- getByName(first_name: string): Promise<IUser>{
+  getByName(first_name: string): Promise<IUser> {
     return lastValueFrom(this.httpClient.get<IUser>(`${this.baseUrl}/${first_name}`))
   }
 
-  quitarTildes(palabra: string){
+  quitarTildes(palabra: string) {
     let sinTildes = ""
     sinTildes = palabra.toLocaleLowerCase()
-    sinTildes = sinTildes.replaceAll ('á', 'a')
-    sinTildes = sinTildes.replaceAll ('é', 'e')
-    sinTildes = sinTildes.replaceAll ('í', 'i')
-    sinTildes = sinTildes.replaceAll ('ó', 'o')
-    sinTildes = sinTildes.replaceAll ('ú', 'u')
+    sinTildes = sinTildes.replaceAll('á', 'a')
+    sinTildes = sinTildes.replaceAll('é', 'e')
+    sinTildes = sinTildes.replaceAll('í', 'i')
+    sinTildes = sinTildes.replaceAll('ó', 'o')
+    sinTildes = sinTildes.replaceAll('ú', 'u')
     return sinTildes;
   }
 
-  
+
 }

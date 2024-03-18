@@ -13,8 +13,8 @@ export class HeaderComponent {
   router = inject(Router)
 
 
-  getSearch(searchForm: any): void{
+  getSearch(searchForm: any): void {
     let busqueda = searchForm.value.busqueda
     this.router.navigateByUrl("/?query=" + busqueda)
-     }
+  }
 }

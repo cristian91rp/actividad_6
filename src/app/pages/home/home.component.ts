@@ -3,13 +3,13 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { IUser } from '../../interfaces/iuser.interface';
 import { UsersService } from '../../services/users.service';
-import { NavigationPageComponent } from '../../components/navigation-page/navigation-page.component';
 import { IData } from '../../interfaces/idata.interface';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, UserCardComponent, NavigationPageComponent],
+  imports: [RouterOutlet, UserCardComponent, NgxPaginationModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -17,16 +17,14 @@ export class HomeComponent {
   usuarios: IUser[] = []
   userServices = inject(UsersService)
   activatedRoute = inject(ActivatedRoute)
-  hola: IData[] | any = []
 
+  page: number = 1
 
   async ngOnInit(): Promise<void> {
 
     try {
       let data = await this.userServices.getAllPromises()
       this.usuarios = data.results
-      this.hola = data.page
-      console.log(this.hola)
       console.log(this.usuarios)
 
 
@@ -44,9 +42,7 @@ export class HomeComponent {
           console.log(buscar)
           this.usuarios = data.results
         }
-
       })
-
     } catch (err) {
       console.log(err)
     }
